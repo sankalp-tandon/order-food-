@@ -8,7 +8,8 @@ import Shimmer from "./Shimmer.js";
 const Body = () =>
 {    // Local state variable - super powerful variable 
   const [ listOfResturants , setListOfResturant ] = useState([]);
-  const [searchText ,setSearchText] = useState(" ");
+  const [filteredResturant , setFilteredResturant] = useState([]);
+  const [searchText , setSearchText] = useState(" ");
 
   useEffect(()=>{
     fetchdata();
@@ -19,13 +20,14 @@ const Body = () =>
     const json =  await data.json() ;
    console.log(json);
    setListOfResturant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+   setFilteredResturant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
 
     if(listOfResturants.length === 0)
     {
       return <Shimmer/> ;
     }
-  
+    
   return (<div className="body">
     <div className="filter">
      <div className="search">
@@ -33,7 +35,13 @@ const Body = () =>
        onChange={(e)=>{
         setSearchText(e.target.value)}}
         />
-      <button className="search-btn"> Search </button>
+      <button className="search-btn" 
+      onClick={()=>{
+        const filteredResturant = listOfResturants.filter((res)=> res.info.name.toLowerCase().includes(searchText.toLowerCase()) );
+        setFilteredResturant(filteredResturant);
+      }}
+      > 
+      Search </button>
      </div>
 
       <button className="filter-btn" 
@@ -41,7 +49,7 @@ const Body = () =>
         {const filteredList = listOfResturants.filter(
           (res)=> res.info.avgRating > 4) ; 
           
-        setListOfResturant(filteredList);}
+        setFilteredResturant(filteredList);}
       }>
         Top Rated Resturants 
       </button>
@@ -50,7 +58,7 @@ const Body = () =>
 
  <div className="res-container"> 
  
- {listOfResturants.map((resturant) =>
+ {filteredResturant.map((resturant) =>
  (
   <ResturantCard resdata = {resturant}  key={resturant.info.id}/>
  ))

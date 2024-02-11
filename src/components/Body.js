@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ResturantCard from "./ResturantCard";
 import Shimmer from "./Shimmer.js";
+import { Link } from "react-router-dom";
 
 
   
@@ -9,23 +10,24 @@ const Body = () =>
 {    // Local state variable - super powerful variable 
   const [ listOfResturants , setListOfResturant ] = useState([]);
   const [filteredResturant , setFilteredResturant] = useState([]);
-  const [searchText , setSearchText] = useState(" ");
+  const [searchText , setSearchText] = useState("");
 
   useEffect(()=>{
     fetchdata();
   }, []);
 
-  const fetchdata = async ()=>{
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6147804&lng=77.2776579&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+  const fetchdata = async () => {
+    const data = await fetch( "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6147804&lng=77.2776579&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING" ) ;
     const json =  await data.json() ;
-   console.log(json);
+    console.log(json);
    setListOfResturant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
    setFilteredResturant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
+   
 
     if(listOfResturants.length === 0)
     {
-      return <Shimmer/> ;
+      return <Shimmer/>;
     }
     
   return (<div className="body">
@@ -60,7 +62,11 @@ const Body = () =>
  
  {filteredResturant.map((resturant) =>
  (
-  <ResturantCard resdata = {resturant}  key={resturant.info.id}/>
+ <Link 
+   key={resturant.info.id}
+   to={"/Restaurant/"+ resturant.info.id}> 
+   <ResturantCard resdata = {resturant}  /> 
+ </Link> 
  ))
  }
 

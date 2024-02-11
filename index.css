@@ -3,11 +3,14 @@
 .header {
     display: flex;
     justify-content: space-between;
-    border: 1px solid black
+    border: 1px solid black;
+    
 }
 
 .logo {
     width: 200px;
+    border-radius: 10px;
+    margin-left:  20px; 
 }
 
 .nav-items {
@@ -78,4 +81,10 @@
     width: 200px;
     height: 400px;
     background-color: #f0f0f0;
+}
+
+.user-card{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
 }

@@ -7,17 +7,19 @@ import About from "./components/About.js";
 import Contact from "./components/Contact.js";
 import Error from "./components/Error.js";
 import ResturantMenu from "./components/ResturantMenu.js";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore.js";
  
-
-
 const AppLayout = ()=>{
-  return (  <div className="app"> 
-       <Header/>
-       <Outlet/>
-  </div>);
-  
-  
-};
+  return ( 
+    <Provider store={appStore}>
+    <div className="app"> 
+      <Header/>
+      <Outlet/>
+    </div>
+    </Provider>);
+  };
+
 const appRouter = createBrowserRouter([
   {
  path: "/",

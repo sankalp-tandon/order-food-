@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";  
 import ResturantCard , {withPromotedLabel} from "./ResturantCard";
 import Shimmer from "./Shimmer.js";
 import { Link } from "react-router-dom";
